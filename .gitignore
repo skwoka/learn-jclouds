@@ -3,3 +3,5 @@
 .settings
 target
 learn-jclouds.yml
+IDE/S3Demo.launch
+IDE/CloudFiles.launch
