@@ -41,22 +41,33 @@ public abstract class DemoBase {
 	}
 
 	protected String uniqueObjectName(File f) {
-		return System.currentTimeMillis() + "-" + f.getName();
+		return uniqueObjectName(f.getName());
+	}
+
+	protected String uniqueObjectName(String name) {
+		return System.currentTimeMillis() + "-" + name;
+
 	}
 
 	public void run() throws Exception {
 		listContainerContent(DEFAULT_CONTAINER);
 
+		// publish a file and get a temporary download URL
+		String url = null;
 		String blobName = publishFileGeneric();
-		String url = createTempUrl(blobName);
-		System.out.println("Temp URL: " + url);
+		url = tempUrlForGet(blobName);
+		System.out.println("Temp URL for a GET: " + url);
+
+		// get a temporary URL for upload
+		url = tempUrlForPut(uniqueObjectName("placeholder"));
+		System.out.println("Temp URL for a PUT: " + url);
 	}
 
 	protected void cleanup() {
 		context.close();
 	}
 
-	protected String createTempUrl(String name) throws Exception {
+	protected String tempUrlForGet(String name) throws Exception {
 		// HttpRequest request =
 		// context.getSigner().signGetBlob(DEFAULT_CONTAINER, name);
 		// System.out.println(request);
@@ -66,6 +77,13 @@ public abstract class DemoBase {
 		return request.getEndpoint().toASCIIString();
 	}
 
+	protected String tempUrlForPut(String name) throws Exception {
+		Blob blob = storage.blobBuilder(name).forSigning().build();
+		HttpRequest request = context.getSigner().signPutBlob(
+				DEFAULT_CONTAINER, blob, 300 /* seconds */);
+		return request.getEndpoint().toASCIIString();
+	}
+	
 	protected void listContainerContent(String container) {
 		Iterator<?> itr = context.getBlobStore().list(container).iterator();
 		while (itr.hasNext()) {
