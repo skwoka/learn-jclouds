@@ -1,5 +1,10 @@
 <?php
 
+  #
+  # This script create a CloudFiles TempURL for PUT and GET
+  #
+  # Adapted from: http://docs.rackspace.com/files/api/v1/cf-devguide/content/Create_TempURL-d1a444.html
+  #
   if ($argc != 5) {
       echo "Syntax: <method> <url> <seconds> <key>";
       echo "Example: GET https://storage101.dfw1.clouddrive.com/v1/" .
