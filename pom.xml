@@ -20,6 +20,18 @@
 			<artifactId>dropwizard-core</artifactId>
 			<version>0.6.1</version>
 		</dependency>
+		
+		<!-- doc calls for 1.5.3 but there is a bug with Cloud Files auth that have been fixed in 1.5.5-SNAPSHOT -->
+		<dependency>
+			<groupId>org.jclouds</groupId>
+			<artifactId>jclouds-allcompute</artifactId>
+			<version>1.5.5-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jclouds</groupId>
+			<artifactId>jclouds-allblobstore</artifactId>
+			<version>1.5.5-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<properties>
